@@ -8,6 +8,8 @@
 import os
 import string
 
+output = False
+
 def IncreaseVersion(fullPath, originalVersion=None):
     fn, ext = os.path.splitext(fullPath)
     fnreverse = fn[::-1]  # reverse string
@@ -19,9 +21,9 @@ def IncreaseVersion(fullPath, originalVersion=None):
         if letter.isdigit() is True:
             beginVersionString = True
             versionString += letter
-            #print("Digit: {0}").format(letter)
+            if output: print("Digit: {0}").format(letter)
         else:
-            #print("Non-Digit: {0}").format(letter)
+            if output: print("Non-Digit: {0}").format(letter)
             if beginVersionString is True:
                 versionString = versionString[::-1]  # reverse string
                 versionNumber = int(versionString)
@@ -45,11 +47,11 @@ def IncreaseVersion(fullPath, originalVersion=None):
     fullPathNew = fnreverse[::-1] + ext
 
     if os.path.exists(fullPathNew):
-        print("{0} already exists, increasing further...").format(fullPathNew, originalVersion)
+        if output: print("{0} already exists, increasing further...").format(fullPathNew, originalVersion)
         fullPathNew = IncreaseVersion(fullPathNew, originalVersion)
     else:
-        print("Increased version {0} to {1}").format(originalVersion, versionStringNew)
-        print("Changed path {0} to {1}").format(fullPath, fullPathNew)
+        if output: print("Increased version {0} to {1}").format(originalVersion, versionStringNew)
+        if output: print("Changed path {0} to {1}").format(fullPath, fullPathNew)
     return fullPathNew
     
 def main():
